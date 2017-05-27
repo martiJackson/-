@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Swiper demo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
+	<script type="text/javascript" src="js/jquery-1.9.1.min.js"></script>
+    <script type="text/javascript" src="js/setFont.js"></script>
+    <style>
+    body html{
+        height:100%;
+    }
+    *{
+        font-size: 14px;
+        margin:0;
+        padding:0;
+    }
+     #page{
+        height:4rem;
+        position:relative;
+        width:12rem;
+        background:rgba(70,130,180,.8);
+        overflow:hidden;
+        margin: 0 auto
+     }
+     .content{
+        height:3rem;
+        width:68rem;
+        font-size: 0;
+        position: absolute;
+        left:-16rem;
+        margin-top:.3rem;
+     }
+     #page>.content>.slider{
+        height:inherit;
+        width:2.8rem;
+        font-size: 14px;
+        background:rgba(46 ,139, 87,1);
+        display:inline-block;
+        margin:0 .6rem;
+     }
+     #sort{  
+        position: absolute;
+        height:.5rem; 
+        bottom:.2rem;
+     }
+      #sort .round{
+        height:.5rem;
+        text-align: center;
+        line-height: .5rem;
+        margin-left: 3rem;
+      }
+      #sort .round>li{
+        height:.1rem;
+        width:.1rem;
+        margin:0 .2rem;        display: inline-block;
+        background:rgba(240,240,240,.8);
+        border:1px solid gray;
+        border-radius:50%;
+      }
+       #sort .round>li.active{
+        background:rgba(238,238,0,.8);
+       }
+       #arrow{
+        position: absolute;
+        height:.5rem;
+        margin-top: 1.5rem;
+        width:100%;
+       }
+       .arrow{
+        height:.5rem;
+        color: rgba(24,116,205,.8);
+        font-size: 50px;
+        font-weight: bold;
+        position: absolute;
+       }
+       .prev{
+        left:.1rem;
+       }
+       .next{
+        right:.1rem;
+       }
+       #mark{
+       	position:fixed;
+       	height:100%;
+       	width:100%;
+       	background:rgba(0,0,0,.8);
+       	top:0;
+       	left:0;
+       	display: none;
+       }
+       #page2{
+       	height:90%;
+       	margin:0 auto;
+       	background:rgba(0,0,0,.8);
+       	width:8rem;
+       	position:relative;
+       }
+       .content2{
+       	position:absolute;
+       	width:1024rem;
+       	font-size: 0;
+       	left:-16rem;
+       }
+       #page2>.content2>.slider{
+       	margin:.5rem 1rem;
+       	height:6rem;
+       	width:6rem;
+       	display: inline-block;
+       	background: rgba(24,116,205,.8);
+       }
+       #sort2{
+       	width:100%;
+       	height:.5rem;
+       	text-align: center;
+       	position: absolute;
+       	color: #fff;
+       	font-style:italic;
+       	bottom:0;
+       }
+       #arrow2{
+       	height:.5rem;
+       	width:100%;
+       	position: absolute;
+       	top:3rem;
+       	width:100%;
+       }
+       .arrow2{
+       	font-size:.5rem;
+       	color: #fff;
+       	position: absolute;
+       	font-weight:bold;
+       }
+       .prev2{       	
+       	left:.1rem;
+       }
+       .next2{
+       	right:.1rem;
+       }
+       #background{
+       	height:100%;
+       	width:100%;
+       	position: absolute;
+       	top:0;
+       	left:0;
+       }
+    </style>
+</head>
+<body>
+<div id='page'>
+    <div class="content">
+        <div class="slider">6</div>
+        <div class="slider">7</div>
+        <div class="slider">8</div>
+        <div class="slider">9</div>
+        <div class="slider">1</div>
+        <div class="slider">2</div>
+        <div class="slider">3</div>
+        <div class="slider">4</div>
+        <div class="slider">5</div>
+        <div class="slider">6</div>
+        <div class="slider">7</div>
+        <div class="slider">8</div>
+        <div class="slider">9</div>
+        <div class="slider">1</div>
+        <div class="slider">2</div>
+        <div class="slider">3</div>
+        <div class="slider">4</div>
+    </div>
+    <div id="sort">
+        <ul class="round">
+            <li class='active' ></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+        </ul>
+    </div>
+    <div id='arrow'>
+        <span class="arrow prev"><</span>
+        <span class="arrow next">></span>
+    </div>    
+</div>
+<div id="mark">
+	<div id="background"></div>
+	<div id='page2'>
+	    <div class="content2">
+	        <div class="slider">8</div>
+	        <div class="slider">9</div>
+	        <div class="slider">1</div>
+	        <div class="slider">2</div>
+	        <div class="slider">3</div>
+	        <div class="slider">4</div>
+	        <div class="slider">5</div>
+	        <div class="slider">6</div>
+	        <div class="slider">7</div>
+	        <div class="slider">8</div>
+	        <div class="slider">9</div>
+	        <div class="slider">1</div>
+	        <div class="slider">2</div>	      
+	    </div>
+	    <div id="sort2">1/9</div> 	       
+	</div>
+	<div id='arrow2'>
+        <span class="arrow2 prev2"><</span>
+        <span class="arrow2 next2">></span>
+	</div>
+</div>
+
+<script type="text/javascript" src='js/jquery-1.9.1.min.js'></script>
+<script type="text/javascript">
+    var prevRun=true;
+    var nextRun=true; 
+    var roundActive=0;
+    var setTime;
+    function moveLeft(){
+        var rem=parseFloat($('html').css('font-size'));
+        var contentLeft=parseFloat($(".content").css('left'));
+       if(nextRun){
+            roundActive++;
+            if(roundActive>$(".round li").length-1){
+                roundActive=0;
+            }
+            $(".round li").eq(roundActive).addClass('active').siblings().removeClass('active');      
+            var Left=contentLeft-rem*4+'px';
+            $(".content").animate({'left':Left},1000,function(){
+                nextRun=true;
+                if(parseFloat($(".content").css('left'))<=-52*rem){
+                    $(".content").css('left',-16*rem+'px')
+                }          
+            });          
+        }       
+       nextRun=false;
+    };
+    setTime=setInterval(function(){
+         moveLeft()
+    },1000);
+    $(".next").click(function(){
+        moveLeft()    
+    })
+    $(".prev").click(function(){
+        var rem=parseFloat($('html').css('font-size'));
+        var contentLeft=parseFloat($(".content").css('left'));
+       if(prevRun){
+            roundActive--;
+            if(roundActive<0){
+                roundActive=$(".round li").length-1
+            }
+            $(".round li").eq(roundActive).addClass('active').siblings().removeClass('active');       
+            var Left=contentLeft+rem*4+'px';
+            $(".content").animate({'left':Left},1000,function(){
+                prevRun=true;
+                if(parseFloat($(".content").css('left'))>=-4*rem){
+                    $(".content").css('left',-40*rem+'px')
+                }          
+            });          
+        }       
+       prevRun=false;       
+    })
+    $("#page").mouseover(function(){
+    	clearInterval(setTime)
+    });
+    $('#page').mouseout(function(){
+    	setTime=setInterval(function(){
+	         moveLeft()
+	    },1000);
+    })
+
+    var nextRun2=true,prevRun2=true,roundActive2=1;
+    $(".prev2").click(function(){
+        var rem=parseFloat($('html').css('font-size'));
+        var contentLeft=parseFloat($(".content2").css('left'));
+       if(prevRun2){
+            roundActive2--;
+            if(roundActive2<1){
+                roundActive2=$(".round li").length;
+            }
+           $("#sort2").text(roundActive2+"/"+$(".round li").length);     
+            var Left=contentLeft+rem*8+'px';
+            $(".content2").animate({'left':Left},1000,function(){
+                prevRun2=true;
+                if(parseFloat($(".content2").css('left'))>=-8*rem){
+                    $(".content2").css('left',-80*rem+'px')
+                }          
+            });          
+        }       
+       prevRun2=false;       
+    })
+    $(".next2").click(function(){
+        var rem=parseFloat($('html').css('font-size'));
+        var contentLeft=parseFloat($(".content2").css('left'));
+       if(nextRun2){
+            roundActive2++;
+            if(roundActive2>$(".round li").length){
+                roundActive2=1;
+            }
+           $("#sort2").text(roundActive2+"/"+$(".round li").length);     
+            var Left=contentLeft-rem*8+'px';
+            $(".content2").animate({'left':Left},1000,function(){
+                nextRun2=true;
+                if(parseFloat($(".content2").css('left'))<=-80*rem){
+                    $(".content2").css('left',-8*rem+'px')
+                }          
+            });          
+        }       
+       nextRun2=false;       
+    })
+</script>
+</body>
+</html>
